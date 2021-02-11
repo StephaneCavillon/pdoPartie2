@@ -64,7 +64,7 @@
             id="phone" 
             aria-label="phone" 
             class="form-control" 
-            placeholder="06-12-34-56-78" 
+            placeholder="0612345678" 
             value="<?= $phone ?? ''?>" 
             pattern="/([\+0-9]{1,3}[0-9]{8,12})|[0-9]{8,15}$" 
             required
@@ -75,3 +75,5 @@
     <button type="submit" class="btn btn-primary">Enregistrer le patient</button>
 
 </form>
+
+<?php
