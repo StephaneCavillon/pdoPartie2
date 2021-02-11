@@ -1,6 +1,6 @@
 <?php
 
-    include(dirname(__FILE__) . '/../models/patient.php');
+    require_once(dirname(__FILE__) . '/../models/patient.php');
 
 // controle des données
 /******************************************************************************************************** */
@@ -57,7 +57,7 @@
                 // On peut aller plus loin sur le test de la date à cet endroit
 
                 if($testRegex == false){
-                    $errorsArray['birthDate_error'] = 'Le date n\'est pas valide, le format attendu est YYYY-MM-JJ';
+                    $errorsArray['birthDate_error'] = 'Le date n\'est pas valide, le format attendu est JJ/MM/YYYY';
                 }
             }else{
                 $errorsArray['birthDate_error'] = 'Le champ n\'est pas rempli';
@@ -103,10 +103,11 @@
             // var_dump($patient);
             // On test si le patient à bien été ajouté ou non dans la base de données
             $testRegister = $patient->addPatient();
+            // var_dump($testRegister);
         }
 
     /******************************************************************************************************** */
-}
+    }
 /******************************************************************************************************** */
 
 
@@ -114,14 +115,7 @@
 
 include(dirname(__FILE__) . '/..\views\templates\header.php');
 
-
-if(isset($testRegister) && $testRegister == true){
-    //si l'enregistrement c'est vi
-    include(dirname(__FILE__) . '/../views/ajout-patient.php');
-    // include(dirname(__FILE__). '/../views/userRegistered.php');
-}else{
-    include(dirname(__FILE__) . '/../views/ajout-patient.php');
-}
+include(dirname(__FILE__) . '/../views/ajout-patient.php');
 
 include(dirname(__FILE__) . '/..\views\templates\footer.php');
 ?>

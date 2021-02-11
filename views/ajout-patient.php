@@ -1,3 +1,25 @@
+<!--message de validation ou d'erreur-->
+
+<?php
+
+    // affichage d'un message si le patient est bien ajouté à la BDD
+    if(isset($testRegister)){
+        if($testRegister){
+    ?>
+
+        <div class="alert alert-success">Le patient à bien été ajouté !</div>
+
+    <?php }else{ ?>
+
+        <div class="alert alert-danger">Le patient n'a pas été ajouté !</div>
+
+    <?php
+        }
+    }
+?>
+
+
+
 <h2 class="text-center my-5">Enregistrer un nouveau patient</h2>
 
 <form class="row g-3" action="" method="post">

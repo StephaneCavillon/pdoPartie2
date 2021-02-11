@@ -4,10 +4,9 @@
         public static function connect(){
 
             // connexion à la base de donnée
-
             $dsn = 'mysql:dbname=hospitale2n;host=127.0.0.1;port:3306';
             $login = 'superadmin';
-            $password = 'CFxDFCbN930xiUm2';
+            $password = 'sncX4CZvYKSOyfgy';
 
             try{
                 $pdo = new PDO($dsn, $login, $password, [

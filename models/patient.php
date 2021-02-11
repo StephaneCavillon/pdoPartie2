@@ -9,8 +9,9 @@
         private $_mail;
         // attribut de connection
         private $_pdo;
-    
-        public function __construct($lastname,$firstname,$birthdate,$phone,$mail){
+        
+        // bien penser à mettre les valeur NULL par défaut sinon on ne peut pas instancier la classe sans paramètre
+        public function __construct($lastname = NULL ,$firstname = NULL ,$birthdate = NULL ,$phone = NULL ,$mail = NULL ){
             $this->_lastname = $lastname;
             $this->_firstname = $firstname;
             $this->_birthdate = $birthdate;
@@ -21,7 +22,7 @@
         }
         
         public function addPatient(){
-            // $sql = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES ('$this->_lastname', '$this->_firstname', '$this->_birthdate', '$this->_phone', '$this->_mail')";
+            // $sql = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES ('$this->_lastname', '$this->_firstname', '$this->_birthdate', '$this->_phone', '$this->_mail');";
 
             // on s'assure que la requetes contient bien les valeurs hydratées
             // var_dump($sql);
@@ -33,7 +34,7 @@
             /* Cette méthode ne sécurise pas au niveau de l'injection SQL*/
             // afin de sécurisé on passe par une requête en méthode prepare: 
             try{
-                $sql1 = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail)";
+                $sql1 = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
 
                 $stmt = $this->_pdo->prepare($sql1);
                 // on vient lier les valeurs a leur marqueur nominatif (:marker)
@@ -45,24 +46,29 @@
 
                 // la methode execute va retourner true ou false si la requêtes c'est bien executé ou non
                 return ($stmt->execute());
+
             } catch(PDOException $e){
                 // on pourra gerer plus tard les différentes erreurs
-                // return false;
+                return false;
                 echo 'L\'utilisateur n\'est pas enregistré : ' . $e->getMessage();
             }
         }
 
         public function listPatient(){
             //récupération de la liste de patient
-            try{        
-                $pdo_statement = $this->_pdo->query('SELECT * FROM `patients`');
+            try{
+                $sql = 'SELECT * FROM `patients`;';  
+                $pdo_statement = $this->_pdo->query("$sql");
 
                 $listPatients = $pdo_statement -> fetchAll();
+
+                return $listPatients;
             } catch(PDOException $e){
                 echo 'erreur de requête : ' . $e->getMessage();
             }
-
         }
+
+        
 
     }
     
