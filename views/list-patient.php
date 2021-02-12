@@ -3,6 +3,6 @@
 
 <ul>
     <?php foreach($listPatients as $patient) : ?>
-    <li><a href="?id=<?=$patient->id?>"><?= "$patient->lastname $patient->firstname"; ?></a></li>
+    <li><a href="/controllers/profil-patientCtrl.php?id_patient=<?= $patient->id?>"><?= "$patient->lastname $patient->firstname"; ?></a></li>
     <?php endforeach?>
 </ul>

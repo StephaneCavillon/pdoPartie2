@@ -37,7 +37,7 @@
                 $sql1 = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
 
                 $stmt = $this->_pdo->prepare($sql1);
-                // on vient lier les valeurs a leur marqueur nominatif (:marker)
+                // on vient lier les valeurs à leur marqueur nominatif (:marker)
                 $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
                 $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
                 $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
@@ -55,15 +55,31 @@
         }
 
         public function listPatient(){
-            //récupération de la liste de patient
+            // récupération de la liste de patient
             try{
                 $sql = 'SELECT * FROM `patients`;';  
-                $pdo_statement = $this->_pdo->query("$sql");
+                $pdo_statement = $this->_pdo->query($sql);
 
                 $listPatients = $pdo_statement -> fetchAll();
 
                 return $listPatients;
             } catch(PDOException $e){
+                echo 'erreur de requête : ' . $e->getMessage();
+            }
+        }
+
+        public function profilPatient($id){
+            //récupération du profil sélectionné en GET dans les paramètres de la méthode
+            try{
+                $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
+
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+                $stmt->execute();
+                $profil = $stmt->fetch();
+
+                return $profil;
+            }catch(PDOException $e){
                 echo 'erreur de requête : ' . $e->getMessage();
             }
         }
