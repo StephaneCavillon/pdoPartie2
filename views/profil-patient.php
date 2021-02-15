@@ -9,6 +9,6 @@
         </ul>
     </div>
     <a href="/controllers/list-patientCtrl.php"><button type="button" class="btn btn-primary">retour à la liste</button></a>
-    <a href="/controllers/update-patientCtrl.php"><button type="button" class="btn btn-primary">modifier le profil</button></a>
+    <a href="/controllers/update-profil-patientCtrl.php?id_patient=<?=$id_patient?>"><button type="button" class="btn btn-primary">modifier le profil</button></a>
   </div>
 </div>

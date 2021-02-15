@@ -14,7 +14,7 @@
 
     
             // On verifie l'existance et on nettoie
-            $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
+            $firstname = strtolower(trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 
             //On test si le champ n'est pas vide
             if(!empty($firstname)){
@@ -30,7 +30,7 @@
 
         // ***************************************************************
             // On verifie l'existance et on nettoie
-            $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
+            $lastname = strtolower(trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
 
             //On test si le champ n'est pas vide
             if(!empty($lastname)){
@@ -100,7 +100,6 @@
     /******************************************************************************************************** */
         if(empty($errorsArray)){
             $patient = new Patient($lastname,$firstname,$birthDate,$phone,$mail);
-            // var_dump($patient);
             // On test si le patient à bien été ajouté ou non dans la base de données
             $testRegister = $patient->addPatient();
             // var_dump($testRegister);

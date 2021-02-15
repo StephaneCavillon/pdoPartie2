@@ -1,5 +1,5 @@
 <?php 
-    include(dirname(__FILE__) . '/../utils/database.php');
+    require_once(dirname(__FILE__) . '/../utils/database.php');
 
     class Patient{
         private $_lastname;
@@ -21,36 +21,68 @@
             $this->_pdo = Database::connect();
         }
         
-        public function addPatient(){
-            // $sql = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES ('$this->_lastname', '$this->_firstname', '$this->_birthdate', '$this->_phone', '$this->_mail');";
-
-            // on s'assure que la requetes contient bien les valeurs hydratées
-            // var_dump($sql);
-
-            // On effectue la requête (/!\ attention le query execute déjà la requête)
-            // $sth = $this->_pdo->query($sql);
-            // $sth->execute();
-
-            /* Cette méthode ne sécurise pas au niveau de l'injection SQL*/
-            // afin de sécurisé on passe par une requête en méthode prepare: 
+        public function isExist($mail){
+            // recherche du profil mis en paramètre
             try{
-                $sql1 = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
+                $sql = "SELECT `id` FROM `patients` WHERE `mail` = :mail;";
+                
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+                $stmt->execute();
+                // On ressort le nombre de ligne de resultat
+                $exist = $stmt->rowCount();
+                
+                // on test s'il y a une ligne ou plusieurs
+                if($exist >= 1){
+                    return true;
+                }else{ 
+                    return false;
+                }
+                // var_dump($exist);
 
-                $stmt = $this->_pdo->prepare($sql1);
-                // on vient lier les valeurs à leur marqueur nominatif (:marker)
-                $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
-                $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
-                $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
-                $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
-                $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
 
-                // la methode execute va retourner true ou false si la requêtes c'est bien executé ou non
-                return ($stmt->execute());
-
-            } catch(PDOException $e){
-                // on pourra gerer plus tard les différentes erreurs
+            }catch(PDOException $e){
+                echo 'erreur de requête : ' . $e->getMessage();
                 return false;
-                echo 'L\'utilisateur n\'est pas enregistré : ' . $e->getMessage();
+            }
+        }
+
+        public function addPatient(){
+            // On verifie que le mail n'existe pas déjà
+            if(!$this->isExist($this->_mail)){
+                // $sql = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES ('$this->_lastname', '$this->_firstname', '$this->_birthdate', '$this->_phone', '$this->_mail');";
+
+                // on s'assure que la requetes contient bien les valeurs hydratées
+                // var_dump($sql);
+
+                // On effectue la requête (/!\ attention le query execute déjà la requête)
+                // $sth = $this->_pdo->query($sql);
+                // $sth->execute();
+
+                /* Cette méthode ne sécurise pas au niveau de l'injection SQL*/
+                // afin de sécurisé on passe par une requête en méthode prepare: 
+                try{
+                    $sql1 = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
+
+                    $stmt = $this->_pdo->prepare($sql1);
+                    // on vient lier les valeurs à leur marqueur nominatif (:marker)
+                    $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
+                    $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
+                    $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
+                    $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
+                    $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
+
+                    // la methode execute va retourner true ou false si la requêtes c'est bien executé ou non
+                    return ($stmt->execute());
+
+                } catch(PDOException $e){
+                    // on pourra gerer plus tard les différentes erreurs
+                    return false;
+                    echo 'L\'utilisateur n\'est pas enregistré : ' . $e->getMessage();
+                }
+            }else{
+                return false;
+
             }
         }
 
@@ -78,10 +110,43 @@
                 $stmt->execute();
                 $profil = $stmt->fetch();
 
+                //rehydrater l'objet ici
+
                 return $profil;
+
             }catch(PDOException $e){
                 echo 'erreur de requête : ' . $e->getMessage();
             }
+        }
+
+        // ne pas mettre tout les paramètres dans la méthode mais utiliser l'hydratation de l'objet faite précedemment
+        public function updatePatient($id){
+
+            try{
+                $sql= " UPDATE `patients` 
+                        SET `lastname`= :lastname,
+                            `firstname` = :firstname, 
+                            `birthdate` = :birthdate, 
+                            `phone` = :phone, 
+                            `mail` = :mail
+                        WHERE `id` = :id;";
+                
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':id',$id, PDO::PARAM_INT);
+                $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
+                $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
+                $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
+                $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
+                $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
+
+                return ($stmt->execute());
+            }catch(PDOException $e){
+                // on pourra gerer plus tard les différentes erreurs
+                echo 'L\'utilisateur n\'est pas enregistré : ' . $e->getMessage();
+                return false;
+            }
+
         }
 
         

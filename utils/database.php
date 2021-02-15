@@ -3,13 +3,10 @@
     class Database{
         public static function connect(){
 
-            // connexion à la base de donnée
-            $dsn = 'mysql:dbname=hospitale2n;host=127.0.0.1;port:3306';
-            $login = 'superadmin';
-            $password = 'sncX4CZvYKSOyfgy';
+            require_once( dirname(__FILE__) . '/config.php');
 
             try{
-                $pdo = new PDO($dsn, $login, $password, [
+                $pdo = new PDO(DSN, LOGIN, PASSWORD, [
                         PDO::ATTR_ERRMODE =>  PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
                 ]);
