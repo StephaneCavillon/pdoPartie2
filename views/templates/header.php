@@ -37,8 +37,12 @@
                     <a class="nav-link" href="/controllers/add-patientCtrl.php">ajouter un patient</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/list-patientCtrl.php">lister les patients</a>
+                    <a class="nav-link" href="/controllers/list-patientCtrl.php">liste des patients</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/controllers/ajout-rdvCtrl.php">Ajout d'un rendez-vous</a>
+                </li>
+
             </ul>
             </div>
         </div>
