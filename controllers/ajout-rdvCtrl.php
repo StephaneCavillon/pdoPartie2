@@ -11,7 +11,6 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         /******************************************* */
             $idPatient = filter_input(INPUT_POST,'patient',FILTER_SANITIZE_NUMBER_INT);
-            var_dump($idPatient);
 
             if($idPatient == false || empty($idPatient)){
                 $errorMessage = 'Veuillez selectionner un patient.';
@@ -35,9 +34,8 @@
         if(empty($errorMessage)){
             $dateHour = "$date $hour";
             $appointment = new Appointments($dateHour, $idPatient);
-            var_dump($appointment);
 
-            $testRegsister = $appointment->addAppt();
+            $testRegister = $appointment->addAppt();
 
         }
     }

@@ -7,11 +7,11 @@
         if($testRegister){
     ?>
 
-        <div class="alert alert-success">Le patient à bien été ajouté !</div>
+        <div class="alert alert-success">Le rendez-vous à bien été ajouté !</div>
 
     <?php }else{ ?>
 
-        <div class="alert alert-danger"><?=$errorMessage?></div>
+        <div class="alert alert-danger">Le rendez-vous n'a pas été enregistré</div>
 
     <?php
         }

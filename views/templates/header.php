@@ -42,6 +42,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/controllers/ajout-rdvCtrl.php">Ajout d'un rendez-vous</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/controllers/liste-rendezvousCtrl.php">Liste des rendez-vous</a>
+                </li>
+
 
             </ul>
             </div>
