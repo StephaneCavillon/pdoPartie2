@@ -89,7 +89,7 @@
         public function listPatient(){
             // récupération de la liste de patient
             try{
-                $sql = 'SELECT * FROM `patients`;';  
+                $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';  
                 $pdo_statement = $this->_pdo->query($sql);
 
                 $listPatients = $pdo_statement -> fetchAll();
