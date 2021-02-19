@@ -14,6 +14,7 @@
                 <td><?=date('d-m-Y', strtotime($appt->dateHour))?></td>
                 <td><?=date('H:i', strtotime($appt->dateHour))?></td>
                 <td><?=$appt->lastname . ' ' . $appt->firstname?></td>
+                <td><a href="/controllers/rendezvousCtrl.php?idAppt=<?=$appt->idAppt?>"><i class="fas fa-plus"></i></a></td>
             </tr>
         <?php endforeach?> 
     </tbody>

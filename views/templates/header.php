@@ -32,25 +32,33 @@
             <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/controllers/add-patientCtrl.php">ajouter un patient</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/controllers/list-patientCtrl.php">liste des patients</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/controllers/ajout-rdvCtrl.php">Ajout d'un rendez-vous</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/controllers/liste-rendezvousCtrl.php">Liste des rendez-vous</a>
-                </li>
-
-
-            </ul>
+                <ul class="navbar-nav">
+                <!-- patient dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Patients
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/controllers/add-patientCtrl.php">ajouter un patient</a></li>
+                            <li><a class="dropdown-item" href="/controllers/list-patientCtrl.php">liste des patients</a></li>
+                        </ul>
+                    </li>
+                <!-- patient dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            Rendez-vous
+                        </a>
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/controllers/ajout-rdvCtrl.php">Ajout d'un rendez-vous</a></li>
+                            <li><a class="dropdown-item" href="/controllers/liste-rendezvousCtrl.php">Liste des rendez-vous</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <div class="container mb-5">
-    
+  

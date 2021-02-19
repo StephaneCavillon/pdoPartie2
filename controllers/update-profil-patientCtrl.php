@@ -1,12 +1,12 @@
 <?php
-    require_once(dirname(__FILE__) . '/../models/patient.php');
+    require_once(dirname(__FILE__) . '/../models/Patient.php');
 
     //controle des données de choix de page
 /********************************************* */
     if(isset($_GET['id_patient'])){
         $patient = new Patient();
 
-        $id_patient = trim(filter_input(INPUT_GET,'id_patient',FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_NO_ENCODE_QUOTES));
+        $id_patient = intval(trim(filter_input(INPUT_GET,'id_patient',FILTER_SANITIZE_NUMBER_INT)));
 
         // $profil = $patient->profilPatient($id_patient);
         // var_dump($patient);
@@ -112,11 +112,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
         $testRegister = $patientUpdated->updatePatient($id_patient);
-        var_dump($patientUpdated);
+        // var_dump($patientUpdated);
     
-
-        header('Location: /controllers/profil-patientCtrl.php?id_patient='. $id_patient);
-    
+        if($testRegister){
+            header('Location: /controllers/profil-patientCtrl.php?id_patient='. $id_patient);
+        }else{
+            //gestion des erreurs
+        }
     }
 
 

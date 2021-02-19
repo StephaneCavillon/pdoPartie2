@@ -26,7 +26,7 @@
     
     <!-- nom prenom  -->
     <div class="input-group mb-3">
-        <span class="input-group-text">Nom et Prénom</span>
+        <span class="input-group-text">Prénom et Nom</span>
         <input 
             type="text" 
             name="firstname" 

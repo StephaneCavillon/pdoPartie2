@@ -33,11 +33,14 @@
 
     <label for="dateAppt">Selectionner le jour du rendez-vous:</label>
     <input type="date" name="dateAppt" id="dateAppt" min="<?=date('Y-m-d')?>" max="<?=date('Y-m-d',strtotime('+6month'))?>" value="<?=date('Y-m-d')?>">
+    <small>La prise de rendez-vous se fait uniquement sur les 6 prochains mois.</small>
+
+
     <label for="timeAppt">Selectionner l'heure du rendez-vous:</label>
     <input type="time" name="timeAppt" id="timeAppt" min="08:30" max="17:30" step="900" required>
     <small>Les horaires de consultations sont de 8:30 à 17:30 avec un début toutes les 15 minutes</small>
 
-    <button type="submit" class="btn btn-primary">Enregistrer le patient</button>
+    <button type="submit" class="btn btn-primary">Enregistrer le rendez-vous</button>
 
 </form>
 

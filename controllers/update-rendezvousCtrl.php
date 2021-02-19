@@ -1,11 +1,15 @@
 <?php
-    require_once(dirname(__FILE__) . '/../models/Patient.php');
     require_once(dirname(__FILE__) . '/../models/Appointments.php');
+    require_once(dirname(__FILE__) . '/../models/Patient.php');
 
-    // $patients qui peut venir de patients list
-    $patient = new Patient();
+    //controle des données de choix de page
+/********************************************* */
+    if(isset($_GET['idAppt'])){
+        $appt = new Appointments();
 
-    $listPatients= $patient->listPatient();
+        $idAppt = intval(trim(filter_input(INPUT_GET,'idAppt',FILTER_SANITIZE_NUMBER_INT)));
+    }
+/********************************************** */
 
     // Controle des données de formulaire
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -35,14 +39,22 @@
             $dateHour = "$date $hour";
             $appointment = new Appointments($dateHour, $idPatient);
 
-            $testRegister = $appointment->addAppt();
+            $testRegister = $appointment->updateAppt($idAppt);
 
+            header('Location: /controllers/rendezvousCtrl.php?idAppt='.$idAppt);
         }
-    }
+    }else{
+        // pour l'affichage des champs du rendez-vous selectionné
+        $selectedAppt = $appt->descriptionAppt($idAppt);
+
+        // pour la liste des patients
+        $patients = new Patient();
+        $listPatient = $patients->listPatient();
+}
 
     include(dirname(__FILE__) . '/..\views\templates\header.php');
 
-    include(dirname(__FILE__) . '/../views/ajout-rendezvous.php');
+    include(dirname(__FILE__) . '/../views/update-rendezvous.php');
 
     include(dirname(__FILE__) . '/..\views\templates\footer.php');
 

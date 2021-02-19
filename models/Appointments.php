@@ -34,7 +34,10 @@
         public function listAppt(){
 
             try{
-                $sql = 'SELECT * FROM `appointments` INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` ORDER BY `dateHour`;';
+                $sql = 'SELECT `patients`.`lastname`,`patients`.`firstname`, `patients`.`id` as idPatient, `appointments`.`id` as idAppt, `appointments`.`dateHour`
+                        FROM  `appointments`
+                        INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
+                        ORDER BY `dateHour`;';
 
                 $stmt = $this->_pdo->query($sql);
                 $listAppt = $stmt->fetchAll();
@@ -46,5 +49,49 @@
                 return false;
             }
         }
+
+        public function descriptionAppt($idAppt){
+            //récupération du profil sélectionné en GET dans les paramètres de la méthode
+            try{
+                $sql = "SELECT `patients`.`lastname`,`patients`.`firstname`, `patients`.`id` as idPatient, `appointments`.`id` as idAppt, `appointments`.`dateHour`
+                FROM  `appointments`
+                INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`id` = :id;";
+
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':id', $idAppt, PDO::PARAM_INT);
+                $stmt->execute();
+                $descriptionAppt = $stmt->fetch();
+                // var_dump($descriptionAppt);
+                return $descriptionAppt;
+
+            }catch(PDOException $e){
+                echo 'erreur de requête : ' . $e->getMessage();
+            }
+        }
+            
+        public function updateAppt($idAppt){
+
+            try{
+                $sql= " UPDATE `appointments` 
+                        SET `dateHour`= :dateHour,
+                            `idPatients` = :idPatients 
+                        WHERE `id` = :id;";
+                
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':id',$idAppt, PDO::PARAM_INT);
+                $stmt->bindValue(':dateHour', $this->_dateHour, PDO::PARAM_STR);
+                $stmt->bindValue(':idPatients', $this->_idPatients, PDO::PARAM_STR);
+
+                return ($stmt->execute());
+            }catch(PDOException $e){
+                // on pourra gerer plus tard les différentes erreurs
+                echo 'Le rendez-vous n\'est pas modifié : ' . $e->getMessage();
+                return false;
+            }
+
+
+        }
+    
     }
-?>
+?> 

@@ -5,6 +5,7 @@ require_once(dirname(__FILE__) . '/../models/Appointments.php');
 $appt = new Appointments();
 
 $listAppt= $appt->listAppt();
+// var_dump($listAppt);
 
 include(dirname(__FILE__) . '/..\views\templates\header.php');
 
