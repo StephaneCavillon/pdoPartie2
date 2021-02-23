@@ -1,5 +1,7 @@
 <?php
     require_once(dirname(__FILE__) . '/../models/Patient.php');
+    require_once(dirname(__FILE__) . '/../models/Appointments.php');
+
 
     // si j'ai le temps reprendre l'exo avec un algo qui ressemble a ça pour mettre l'affichage du profil et l'update sur la même page
     // Si idpatient && update=true
@@ -12,6 +14,7 @@
     // 
 
     $patient = new Patient();
+    $appt = new Appointments();
 
 //controle des données de choix de page
 /********************************************* */
@@ -19,18 +22,14 @@
 
         $id_patient = intval(trim(filter_input(INPUT_GET,'id_patient',FILTER_SANITIZE_NUMBER_INT)));
 
-        // $profil = $patient->profilPatient($id_patient);
-        // var_dump($patient);
-        
 /********************************************** */
 }
-
-// if($id_patient<= 0){
-//     header('Location: /index.php');
-// }else{
-// }
+// affichage du profil du patient
 $profil = $patient->profilPatient($id_patient);
-// var_dump($profil);
+
+//affichage des rendez-vous
+$listAppt = $appt->listApptByPatient($id_patient);
+
 if(!$profil){
     header('Location: /index.php');
 }

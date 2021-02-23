@@ -11,12 +11,7 @@
             
         }
 
-        // if($idAppt<= 0){
-        //     header('Location: /controllers/liste-rendezvousCtrl.php');
-        // }else{
-        // }
         $description = $appt->descriptionAppt($idAppt);
-        // var_dump($description);
         if(!$description){
             header('Location: /index.php');
         }

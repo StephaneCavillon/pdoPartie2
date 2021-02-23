@@ -149,11 +149,45 @@
 
         }
 
+        public function deletePatient($idPatient){
+
+            try{ 
+                $sql= " DELETE FROM `patients` 
+                WHERE `id` = :id;";
         
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':id',$idPatient, PDO::PARAM_INT);
+
+                return ($stmt->execute());
+            }catch(PDOException $e){
+                // on pourra gerer plus tard les différentes erreurs
+                echo 'Le patient n\'est pas supprimé : ' . $e->getMessage();
+                return false;
+            }
+        }
+
+        public function searchPatient($search){
+
+            try{ 
+                $sql= " SELECT * FROM `patients` 
+                WHERE `lastname` LIKE  :search OR `firstname` LIKE :search;";
+        
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
+
+                $stmt->execute();
+
+                $listSearch = $stmt->fetchAll();
+                return $listSearch;
+
+            }catch(PDOException $e){
+                // on pourra gerer plus tard les différentes erreurs
+                echo 'erreur de requête: ' . $e->getMessage();
+                return false;
+            }
+        }
 
     }
-    
-
-
-
 ?>

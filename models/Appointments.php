@@ -93,5 +93,59 @@
 
         }
     
+        public function listApptByPatient($idPatient){
+            try{
+                $sql = 'SELECT * FROM `appointments` WHERE `idPatients` = :id;';  
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':id',$idPatient,PDO::PARAM_INT);
+                $stmt->execute();
+                $listAppt = $stmt -> fetchAll();
+
+                return $listAppt;
+            } catch(PDOException $e){
+                echo 'erreur de requête : ' . $e->getMessage();
+            }
+
+        }
+
+        public function deleteAppt($idAppt){
+
+            try{ 
+                $sql= " DELETE FROM `appointments` 
+                WHERE `id` = :id;";
+        
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':id',$idAppt, PDO::PARAM_INT);
+
+                return ($stmt->execute());
+            }catch(PDOException $e){
+                // on pourra gerer plus tard les différentes erreurs
+                echo 'Le rendez-vous n\'est pas supprimé : ' . $e->getMessage();
+                return false;
+            }
+
+
+        }
+
+        public function deleteApptFromPatient($idPatient){
+            
+            try{ 
+                $sql= " DELETE FROM `appointments` 
+                WHERE `idPatients` = :id;";
+        
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':id',$idPatient, PDO::PARAM_INT);
+
+                return ($stmt->execute());
+            }catch(PDOException $e){
+                // on pourra gerer plus tard les différentes erreurs
+                echo 'Le rendez-vous n\'est pas supprimé : ' . $e->getMessage();
+                return false;
+            }
+
+        }
+
     }
 ?> 
