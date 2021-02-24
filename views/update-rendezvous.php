@@ -6,10 +6,9 @@
     <label for="patient">Patient</label>
     <select name="patient" id="patient">
         <!--profil selectionné-->
-        <option value="<?=$selectedAppt->idPatient?>"><?= ucfirst($selectedAppt->lastname) . ' ' . ucfirst($selectedAppt->firstname) ?></option>
         <!-- liste de tout les profils -->
             <?php foreach($listPatient as $patient): ?>
-                <option value="<?=$patient->id?>"><?= ucfirst($patient->lastname) . ' ' . ucfirst($patient->firstname) ?></option>
+                <option value="<?=$patient->id?>" <?=($patient->id == $selectedAppt->idPatient) ? 'selected': ''?>><?= ucfirst($patient->lastname) . ' ' . ucfirst($patient->firstname) ?></option>
             <?php endforeach?>
     </select>
 

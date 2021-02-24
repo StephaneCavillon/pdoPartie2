@@ -7,6 +7,8 @@
         private $_birthdate;
         private $_phone;
         private $_mail;
+
+        private $_limite = 5;
         // attribut de connection
         private $_pdo;
         
@@ -86,18 +88,42 @@
             }
         }
 
-        public function listPatient(){
+        public function listPatient($page){
             // récupération de la liste de patient
-            try{
-                $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';  
-                $pdo_statement = $this->_pdo->query($sql);
+            try{                
+                $debut = ($page-1)*$this->_limite;
 
-                $listPatients = $pdo_statement -> fetchAll();
+                // Requete pour recuperer l'affichage du nombre limite de patient
+                $sql = 'SELECT * FROM `patients` ORDER BY `lastname` LIMIT :limite OFFSET :debut; ';  
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':limite', $this->_limite, PDO::PARAM_INT);
+                $stmt->bindValue(':debut', $debut, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $listPatients = $stmt -> fetchAll();
 
                 return $listPatients;
             } catch(PDOException $e){
                 echo 'erreur de requête : ' . $e->getMessage();
             }
+        }
+
+        public function nbPage(){
+            try{
+                // la query ne renvoit qu'un objet avec la requete il faut faire un fetch derriere
+                // le fetch simple renvoi un objet, pour simplifier le resultat on utilise le fetchColumn qui renvoit juste un string avec le nombre compté.
+                $sql = 'SELECT count(`id`) FROM `patients`;';
+                $stmt = $this->_pdo->query($sql);
+                $nombreTotalPatient = $stmt->fetchColumn();
+
+                // ceil permet d'arrondir à l'entier supérieur
+                $nombrePages = ceil($nombreTotalPatient/$this->_limite);
+
+                return $nombrePages;
+            }catch(PDOException $e){
+                echo 'erreur de requête : ' . $e->getMessage();
+            }
+
         }
 
         public function profilPatient($id){
@@ -171,7 +197,7 @@
 
             try{ 
                 $sql= " SELECT * FROM `patients` 
-                WHERE `lastname` LIKE  :search OR `firstname` LIKE :search;";
+                WHERE `lastname` LIKE  :search OR `firstname` LIKE :search ORDER BY `lastname`;";
         
                 $stmt = $this->_pdo->prepare($sql);
 

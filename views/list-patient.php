@@ -24,11 +24,29 @@
             <td><?=ucfirst($patient->lastname)?></td>
             <td><?=ucfirst($patient->firstname)?></td>
             <td><?=date('d/m/Y',strtotime($patient->birthdate))?></td>
-            <td><a href="/controllers/profil-patientCtrl.php?id_patient=<?= $patient->id?>"><i class="fas fa-plus"></a></td>
+            <td><a href="/controllers/profil-patientCtrl.php?id_patient=<?=$patient->id?>"><i class="fas fa-plus"></a></td>
             <td><button type="button" class="btn btn-primary btn-floating" data-mdb-toggle="modal" data-mdb-target="#deleteValidation" data-id="<?=$patient->id?>"><i class="fas fa-trash-alt"></i></button></td>
         </tr>
     <?php endforeach?>
 </table>
+
+<!--Pagination-->
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <!-- on affiche precedent que si le nombre de page est sup à 1 -->
+    <?php if($page>1): ?>
+        <li class="page-item"><a class="page-link" href="?page=<?=$page-1?>">Precedente</a></li>
+    <?php endif?>
+    <!-- faire un forEach par rapport au nombre de pages-->
+    <?php for ($i=1; $i<=$nombrePages; $i++):?>
+        <li class="page-item"><a class="page-link" href="?page=<?=$i?>"><?=$i?></a></li>
+    <?php endfor?>
+    <!-- on affiche suivant que si le nombre de page est inférieur au nombre de page max -->
+    <?php if($page < $nombrePages):?>
+        <li class="page-item"><a class="page-link" href="?page=<?=$page+1?>">Suivante</a></li>
+    <?php endif?>
+  </ul>
+</nav>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteValidation" tabindex="-1" aria-labelledby="Confirmation de suppression" aria-hidden="true">

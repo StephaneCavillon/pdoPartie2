@@ -89,7 +89,6 @@
             placeholder="0612345678" 
             value="<?= $phone ?? ''?>" 
             pattern="/([\+0-9]{1,3}[0-9]{8,12})|[0-9]{8,15}$" 
-            required
             />
         <small id="phone_error" class="form-text"><?= $errorsArray['phone_error'] ?? ''?></small>
     </div>

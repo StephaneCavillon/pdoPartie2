@@ -41,10 +41,10 @@
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="/controllers/add-patientCtrl.php">ajouter un patient</a></li>
-                            <li><a class="dropdown-item" href="/controllers/list-patientCtrl.php">liste des patients</a></li>
+                            <li><a class="dropdown-item" href="/controllers/list-patientCtrl.php?page=1">liste des patients</a></li>
                         </ul>
                     </li>
-                <!-- patient dropdown -->
+                <!-- rendez-vous dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                             Rendez-vous
