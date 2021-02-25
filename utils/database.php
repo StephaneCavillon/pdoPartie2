@@ -14,6 +14,7 @@
                 echo 'Connexion echouée: ' . $e->getMessage();
             }
 
+            var_dump($pdo);
             // On retourne l'objet afin de pouvoir l'utiliser lors de l'instance des différents objets
             return $pdo;
         }

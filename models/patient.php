@@ -7,8 +7,6 @@
         private $_birthdate;
         private $_phone;
         private $_mail;
-
-        private $_limite = 5;
         // attribut de connection
         private $_pdo;
         
@@ -88,21 +86,25 @@
             }
         }
 
-        public function listPatient($page){
+        public function listPatient($debut=null, $limite=null){
             // récupération de la liste de patient
-            try{                
-                $debut = ($page-1)*$this->_limite;
-
-                // Requete pour recuperer l'affichage du nombre limite de patient
-                $sql = 'SELECT * FROM `patients` ORDER BY `lastname` LIMIT :limite OFFSET :debut; ';  
-                $stmt = $this->_pdo->prepare($sql);
-                $stmt->bindValue(':limite', $this->_limite, PDO::PARAM_INT);
-                $stmt->bindValue(':debut', $debut, PDO::PARAM_INT);
-                $stmt->execute();
+            try{  
+                if($debut !== null){ 
+                    // Requete pour recuperer l'affichage du nombre limite de patient
+                    $sql = 'SELECT * FROM `patients` ORDER BY `lastname` LIMIT :limite OFFSET :debut; ';  
+                    $stmt = $this->_pdo->prepare($sql);
+                    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+                    $stmt->bindValue(':debut', $debut, PDO::PARAM_INT);
+                    $stmt->execute();
+                }else{
+                    $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';
+                    $stmt = $this->_pdo->query($sql);             
+                }
 
                 $listPatients = $stmt -> fetchAll();
 
                 return $listPatients;
+
             } catch(PDOException $e){
                 echo 'erreur de requête : ' . $e->getMessage();
             }
@@ -114,12 +116,9 @@
                 // le fetch simple renvoi un objet, pour simplifier le resultat on utilise le fetchColumn qui renvoit juste un string avec le nombre compté.
                 $sql = 'SELECT count(`id`) FROM `patients`;';
                 $stmt = $this->_pdo->query($sql);
-                $nombreTotalPatient = $stmt->fetchColumn();
+                $nombreTotalPatients = $stmt->fetchColumn();
 
-                // ceil permet d'arrondir à l'entier supérieur
-                $nombrePages = ceil($nombreTotalPatient/$this->_limite);
-
-                return $nombrePages;
+                return $nombreTotalPatients;
             }catch(PDOException $e){
                 echo 'erreur de requête : ' . $e->getMessage();
             }
@@ -214,6 +213,8 @@
                 return false;
             }
         }
+
+        
 
     }
 ?>

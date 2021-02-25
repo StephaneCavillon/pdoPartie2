@@ -7,8 +7,8 @@ $appt = new Appointments();
 $patient = new Patient();
 
 // controle des données en _GET pour la suppression
-if(isset($_GET['idPatientDelete']) && $_GET['idPatientDelete'] != 0){
-    $idPatientDlt = intval(trim(filter_input(INPUT_GET,'idPatientDelete',FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_NO_ENCODE_QUOTES)));
+if(isset($_GET['idPatientDelete']) && $_GET['idPatientDelete'] > 0){
+    $idPatientDlt = intval(trim(filter_input(INPUT_GET,'idPatientDelete',FILTER_SANITIZE_NUMBER_INT)));
 
     $appt->deleteApptFromPatient($idPatientDlt);
 

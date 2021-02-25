@@ -3,7 +3,7 @@
 <table class="table table-striped">
     <form action="" method="GET" >
         <div class="input-group rounded">
-            <input type="search" name="search" id="search" class="form-control rounded" placeholder="Recherche" aria-label="Search" aria-describedby="search-addon" value="<?= $search ?? ''?>"/>
+            <input type="search" name="search" id="search" class="form-control rounded" placeholder="Rechercher" aria-label="Search" aria-describedby="search-addon" value="<?= $search ?? ''?>"/>
             <button type="submit" class="input-group-text border-0" id="search-addon">
                 <i class="fas fa-search"></i>
             </button>
@@ -64,7 +64,7 @@
       <div class="modal-body">Voulez-vous vraiment supprimer le patient et ses rendez-vous ?</div>
       <div class="modal-footer">
         <!-- le href est definit en JS en fonction du bouton sur lequel on appuie-->
-        <a href=""><button type="button" class="btn btn-primary">Supprimer</button></a>
+        <a href="/controllers/delete-patientCtrl.php?idPatientDelete="><button type="button" class="btn btn-primary">Supprimer</button></a>
         <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
           Annuler
         </button>

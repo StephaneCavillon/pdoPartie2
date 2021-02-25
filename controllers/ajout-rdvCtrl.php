@@ -7,7 +7,8 @@
 
     $listPatients= $patient->listPatient();
 
-    // Controle des données de formulaire
+// Controle des données de formulaire
+/******************************************************************************************** */
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         /******************************************* */
             $idPatient = filter_input(INPUT_POST,'patient',FILTER_SANITIZE_NUMBER_INT);
@@ -39,6 +40,7 @@
 
         }
     }
+/******************************************************************************************** */
 
     include(dirname(__FILE__) . '/..\views\templates\header.php');
 

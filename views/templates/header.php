@@ -20,6 +20,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/index.php">Hopitale2n</a>
+            <!-- bouton hamburger -->
             <button
             class="navbar-toggler"
             type="button"
@@ -31,6 +32,7 @@
             >
             <i class="fas fa-bars"></i>
             </button>
+            <!-- menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                 <!-- patient dropdown -->
@@ -54,6 +56,10 @@
                             <li><a class="dropdown-item" href="/controllers/ajout-rdvCtrl.php">Ajout d'un rendez-vous</a></li>
                             <li><a class="dropdown-item" href="/controllers/liste-rendezvousCtrl.php">Liste des rendez-vous</a></li>
                         </ul>
+                    </li>
+                <!-- ajout patient et rendez-vous-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/controllers/ajout-patient-rdvCtrl.php">Enregistrer un patient et son rendez-vous</a>
                     </li>
                 </ul>
             </div>
