@@ -17,11 +17,15 @@
         public function addAppt(){
 
             try{
+                $pdo = Database::connect();
+
                 $sql = "INSERT INTO `appointments` (`dateHour`, `idPatients`) VALUES (:dateHour, :idPatients);";
 
-                $stmt = $this->_pdo->prepare($sql);
+                $stmt = $pdo->prepare($sql);
                 $stmt->bindValue(':dateHour', $this->_dateHour,PDO::PARAM_STR);
                 $stmt->bindValue(':idPatients', $this->_idPatients, PDO::PARAM_INT);
+              
+        
                 return ($stmt->execute());
             
             }catch(PDOException $e){
@@ -93,8 +97,10 @@
 
         }
     
-        public static function listApptByPatient($idPatient, $pdo){
+        public function listApptByPatient($idPatient){
             try{
+                $pdo = DATABASE::connect();
+
                 $sql = 'SELECT * FROM `appointments` WHERE `idPatients` = :id;';  
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindValue(':id',$idPatient,PDO::PARAM_INT);

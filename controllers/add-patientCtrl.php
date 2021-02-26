@@ -99,9 +99,10 @@
     //création de l'instance de patient
     /******************************************************************************************************** */
         if(empty($errorsArray)){
+            $pdo = Database::connect();
             $patient = new Patient($lastname,$firstname,$birthDate,$phone,$mail);
             // On test si le patient à bien été ajouté ou non dans la base de données
-            $testRegister = $patient->addPatient();
+            $testRegister = $patient->addPatient($pdo);
             // var_dump($testRegister);
         }
 

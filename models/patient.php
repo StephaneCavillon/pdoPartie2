@@ -11,7 +11,7 @@
         private $_pdo;
         
         // bien penser à mettre les valeur NULL par défaut sinon on ne peut pas instancier la classe sans paramètre
-        public function __construct($lastname = NULL ,$firstname = NULL ,$birthdate = NULL ,$phone = NULL ,$mail = NULL ){
+        public function __construct($lastname = NULL ,$firstname = NULL ,$birthdate = NULL ,$phone = NULL ,$mail = NULL){
             $this->_lastname = $lastname;
             $this->_firstname = $firstname;
             $this->_birthdate = $birthdate;
@@ -62,9 +62,11 @@
                 /* Cette méthode ne sécurise pas au niveau de l'injection SQL*/
                 // afin de sécurisé on passe par une requête en méthode prepare: 
                 try{
+                    $pdo = database::connect();
+
                     $sql1 = "INSERT INTO `patients` (`lastname`,`firstname`, `birthdate`, `phone`, `mail`) VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
 
-                    $stmt = $this->_pdo->prepare($sql1);
+                    $stmt = $pdo->prepare($sql1);
                     // on vient lier les valeurs à leur marqueur nominatif (:marker)
                     $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
                     $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
@@ -125,9 +127,11 @@
 
         }
 
-        public static function profilPatient($id,$pdo){
+        public static function profilPatient($id){
             //récupération du profil sélectionné en GET dans les paramètres de la méthode
             try{
+                $pdo = DATABASE::connect();
+
                 $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
 
                 $stmt = $pdo->prepare($sql);

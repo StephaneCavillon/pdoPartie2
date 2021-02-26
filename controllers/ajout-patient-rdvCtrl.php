@@ -1,26 +1,16 @@
 <?php
 
-//principe de la transaction:
-// instance de patient = démarage d'un PDO;
-// hydratation de l'objet patient
-//  à voir hydratation de l'objet appt via method static
-// démarage de la transaction;
-// $patient->addPatient()
-// $appt::addAppt($dateHour); // à écrire
-// cloture de la transaction commit ou rollback
-
 require_once(dirname(__FILE__) . '/../models/Patient.php');
+require_once(dirname(__FILE__) . '/../models/Appointments.php');
+
 
 // controle des données du patient
 /******************************************************************************************************** */
-    /********************************************** */
-    include(dirname(__FILE__) . '/../utils/regexp.php');
-        
     $errorsArray = array();
 
     //On ne controle que s'il y a des données envoyées 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
+        include(dirname(__FILE__) . '/../utils/regexp.php');
 
         // On verifie l'existance et on nettoie
         $firstname = strtolower(trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
@@ -118,25 +108,44 @@ require_once(dirname(__FILE__) . '/../models/Patient.php');
             $errorsArray['hour_error'] = 'L\'heure selectionné ne correspond pas aux heures d\'ouverture';
         }
 /******************************************************************************************** */
+        // s'il n'y a pas d'erreur on lance la transaction
         if(empty($errorsArray)){
             $dateHour = "$date $hour";
 
-            try{
+            
             //création de l'objet PDO
-            $pdo = DATABASE::connect();
+            $pdo = Database::connect();
 
             $pdo->beginTransaction();
 
-
             $patient = new Patient($lastname,$firstname,$birthDate,$phone,$mail);
 
-            }catch(PDOException $e){
+            $testRegisterPatient = $patient->addPatient();
+
+            var_dump($testRegisterPatient);
+
+            $idPatient = $pdo->lastInsertId();
+
+            $appt = new Appointments($dateHour, $idPatient);
+
+            $testRegisterAppt = $appt->addAppt();
+            
+            var_dump($testRegisterAppt);
+            // die;
+
+            if($testRegisterPatient && $testRegisterAppt){
+                $pdo->commit();
+
+                var_dump('enregistrement OK');
+
+                // header('Location: /controllers/profil-patientCtrl.php?id_patient='. $idPatient);
+
+            }else{
                 $pdo->rollBack();
-                echo ' uen erreur c\'est produite : ' . $e->getMessage();
+                echo 'Une erreur s\'est produite ';
             }
         }
     }
-    // $pdo = DATABASE::connect();
 
 
 
