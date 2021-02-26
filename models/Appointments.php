@@ -93,10 +93,10 @@
 
         }
     
-        public function listApptByPatient($idPatient){
+        public static function listApptByPatient($idPatient, $pdo){
             try{
                 $sql = 'SELECT * FROM `appointments` WHERE `idPatients` = :id;';  
-                $stmt = $this->_pdo->prepare($sql);
+                $stmt = $pdo->prepare($sql);
                 $stmt->bindValue(':id',$idPatient,PDO::PARAM_INT);
                 $stmt->execute();
                 $listAppt = $stmt -> fetchAll();

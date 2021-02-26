@@ -125,17 +125,15 @@
 
         }
 
-        public function profilPatient($id){
+        public static function profilPatient($id,$pdo){
             //récupération du profil sélectionné en GET dans les paramètres de la méthode
             try{
                 $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
 
-                $stmt = $this->_pdo->prepare($sql);
+                $stmt = $pdo->prepare($sql);
                 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
                 $stmt->execute();
                 $profil = $stmt->fetch();
-
-                //rehydrater l'objet ici
 
                 return $profil;
 

@@ -13,9 +13,7 @@
         // new Patient();  $patient->profilPatient($id_patient); readprofile
     // 
 
-    $patient = new Patient();
-    $appt = new Appointments();
-
+    $pdo = DATABASE::connect();
 //controle des données de choix de page
 /********************************************* */
     if(isset($_GET['id_patient'])){
@@ -25,10 +23,10 @@
 /********************************************** */
 }
 // affichage du profil du patient
-$profil = $patient->profilPatient($id_patient);
+$profil = Patient::profilPatient($id_patient,$pdo);
 
 //affichage des rendez-vous
-$listAppt = $appt->listApptByPatient($id_patient);
+$listAppt = Appointments::listApptByPatient($id_patient,$pdo);
 
 if(!$profil){
     header('Location: /index.php');
