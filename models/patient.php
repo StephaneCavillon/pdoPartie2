@@ -38,8 +38,6 @@
                 }else{ 
                     return false;
                 }
-                // var_dump($exist);
-
 
             }catch(PDOException $e){
                 echo 'erreur de requête : ' . $e->getMessage();
@@ -88,20 +86,31 @@
             }
         }
 
-        public function listPatient($debut=null, $limite=null){
+        public function listPatient($debut=null, $limite=null, $search=NULL){
             // récupération de la liste de patient
             try{  
-                if($debut !== null){ 
-                    // Requete pour recuperer l'affichage du nombre limite de patient
-                    $sql = 'SELECT * FROM `patients` ORDER BY `lastname` LIMIT :limite OFFSET :debut; ';  
+                if(is_null($search)){
+                    if($debut !== null){ 
+                        // Requete pour recuperer l'affichage du nombre limite de patient
+                        $sql = 'SELECT * FROM `patients` ORDER BY `lastname` LIMIT :limite OFFSET :debut;';  
+                        $stmt = $this->_pdo->prepare($sql);
+                        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+                        $stmt->bindValue(':debut', $debut, PDO::PARAM_INT);
+                    }else{
+                        $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';
+                        $stmt = $this->_pdo->query($sql);             
+                    }
+                }else{
+                    $sql= " SELECT * FROM `patients` WHERE `lastname` LIKE  :search OR `firstname` LIKE :search ORDER BY `lastname` LIMIT :limite OFFSET :debut;";
+            
                     $stmt = $this->_pdo->prepare($sql);
+    
+                    $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
                     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
                     $stmt->bindValue(':debut', $debut, PDO::PARAM_INT);
-                    $stmt->execute();
-                }else{
-                    $sql = 'SELECT * FROM `patients` ORDER BY `lastname`;';
-                    $stmt = $this->_pdo->query($sql);             
+    
                 }
+                $stmt->execute();
 
                 $listPatients = $stmt -> fetchAll();
 
@@ -112,12 +121,15 @@
             }
         }
 
-        public function nbPage(){
+        public function nbPatient($search=NULL){
             try{
                 // la query ne renvoit qu'un objet avec la requete il faut faire un fetch derriere
                 // le fetch simple renvoi un objet, pour simplifier le resultat on utilise le fetchColumn qui renvoit juste un string avec le nombre compté.
-                $sql = 'SELECT count(`id`) FROM `patients`;';
-                $stmt = $this->_pdo->query($sql);
+                $sql = 'SELECT count(`id`) FROM `patients` WHERE `lastname` LIKE :search OR `firstname` LIKE :search;';
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
+                $stmt->execute();
+
                 $nombreTotalPatients = $stmt->fetchColumn();
 
                 return $nombreTotalPatients;
@@ -193,30 +205,5 @@
                 return false;
             }
         }
-
-        public function searchPatient($search){
-
-            try{ 
-                $sql= " SELECT * FROM `patients` 
-                WHERE `lastname` LIKE  :search OR `firstname` LIKE :search ORDER BY `lastname`;";
-        
-                $stmt = $this->_pdo->prepare($sql);
-
-                $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
-
-                $stmt->execute();
-
-                $listSearch = $stmt->fetchAll();
-                return $listSearch;
-
-            }catch(PDOException $e){
-                // on pourra gerer plus tard les différentes erreurs
-                echo 'erreur de requête: ' . $e->getMessage();
-                return false;
-            }
-        }
-
-        
-
     }
 ?>

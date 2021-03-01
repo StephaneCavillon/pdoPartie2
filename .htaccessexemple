@@ -1,0 +1,9 @@
+Options +FollowSymlinks
+RewriteEngine on
+RewriteRule "^1.html$"  "index.php/?id=1" [L]
+RewriteRule "^2.html$"  "index.php/?id=2" [L]
+RewriteRule "^3.html$"  "index.php/?id=3" [L]
+RewriteRule "^4.html$"  "index.php/?id=4" [L]
+
+#correction
+RewriteRule ^([1-4]).html$  index.php?id=$1 [L]

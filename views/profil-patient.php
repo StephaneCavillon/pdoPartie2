@@ -1,3 +1,24 @@
+<!--message de validation ou d'erreur-->
+
+<?php
+
+    // affichage d'un message si le patient est bien ajouté à la BDD
+    if(isset($_GET['success'])){
+      $success = intval(filter_input(INPUT_GET,'success',FILTER_SANITIZE_NUMBER_INT));
+      
+      if($success){
+    ?>
+
+        <div class="alert alert-success">Le patient et le rendez-vous ont bien été ajouté !</div>
+
+    <?php 
+      }else{
+        header('Location: /controllers/list-patientCtrl.php?success=0');
+      }
+    }
+?>
+
+
 <div class="container-fluid my-5">
   <div class="row">
     <div class="col">

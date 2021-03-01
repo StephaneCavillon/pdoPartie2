@@ -1,0 +1,8 @@
+Options +FollowSymlinks
+RewriteEngine on
+RewriteRule ^Bienvenue$ http://pdopartie2.sc.localhost/index.php [L]
+
+
+
+#exemple
+#RewriteRule ^([1-4]).html$  index.php?id=$1 [L]

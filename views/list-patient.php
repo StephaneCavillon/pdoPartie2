@@ -1,3 +1,21 @@
+<!--message de validation ou d'erreur-->
+
+<?php
+
+    // affichage d'un message si le patient est bien ajouté à la BDD
+    if(isset($_GET['success'])){
+      $success = intval(filter_input(INPUT_GET,'success',FILTER_SANITIZE_NUMBER_INT));
+
+      if(!$success){
+  ?>
+        <div class="alert alert-danger">Le patient et le rendez-vous n'ont pas été créé</div>
+
+    <?php
+        }
+    }
+?>
+
+
 <h2 class="my-5">Liste des patients</h2>
 
 <table class="table table-striped">
@@ -30,23 +48,25 @@
     <?php endforeach?>
 </table>
 
+
 <!--Pagination-->
 <nav aria-label="Page navigation">
   <ul class="pagination">
     <!-- on affiche precedent que si le nombre de page est sup à 1 -->
     <?php if($page>1): ?>
-        <li class="page-item"><a class="page-link" href="?page=<?=$page-1?>">Precedente</a></li>
+        <li class="page-item"><a class="page-link" href="?page=<?=$page-1?>&search=<?=$search?>">Precedente</a></li>
     <?php endif?>
     <!-- faire un forEach par rapport au nombre de pages-->
     <?php for ($i=1; $i<=$nombrePages; $i++):?>
-        <li class="page-item"><a class="page-link" href="?page=<?=$i?>"><?=$i?></a></li>
+        <li class="page-item"><a class="page-link" href="?page=<?=$i?>&search=<?=$search?>"><?=$i?></a></li>
     <?php endfor?>
     <!-- on affiche suivant que si le nombre de page est inférieur au nombre de page max -->
     <?php if($page < $nombrePages):?>
-        <li class="page-item"><a class="page-link" href="?page=<?=$page+1?>">Suivante</a></li>
+        <li class="page-item"><a class="page-link" href="?page=<?=$page+1?>&search=<?=$search?>">Suivante</a></li>
     <?php endif?>
   </ul>
 </nav>
+
 
 <!-- Modal -->
 <div class="modal fade" id="deleteValidation" tabindex="-1" aria-labelledby="Confirmation de suppression" aria-hidden="true">

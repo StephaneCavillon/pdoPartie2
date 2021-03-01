@@ -113,7 +113,7 @@ require_once(dirname(__FILE__) . '/../models/Appointments.php');
             $dateHour = "$date $hour";
 
             
-            //création de l'objet PDO
+            //création de l'objet PDO et lancement de la transaction
             $pdo = Database::connect();
 
             $pdo->beginTransaction();
@@ -122,27 +122,25 @@ require_once(dirname(__FILE__) . '/../models/Appointments.php');
 
             $testRegisterPatient = $patient->addPatient();
 
-            var_dump($testRegisterPatient);
-
             $idPatient = $pdo->lastInsertId();
 
             $appt = new Appointments($dateHour, $idPatient);
 
             $testRegisterAppt = $appt->addAppt();
             
-            var_dump($testRegisterAppt);
-            // die;
-
             if($testRegisterPatient && $testRegisterAppt){
                 $pdo->commit();
 
                 var_dump('enregistrement OK');
 
-                // header('Location: /controllers/profil-patientCtrl.php?id_patient='. $idPatient);
+                header('Location: /controllers/profil-patientCtrl.php?id_patient='. $idPatient .'&success=1');
 
             }else{
                 $pdo->rollBack();
                 echo 'Une erreur s\'est produite ';
+
+                header('Location: /controllers/list-patientCtrl.php?success=0');
+
             }
         }
     }
