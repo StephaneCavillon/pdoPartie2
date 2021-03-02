@@ -1,6 +1,9 @@
 Options +FollowSymlinks
 RewriteEngine on
-RewriteRule ^Bienvenue$ http://pdopartie2.sc.localhost/index.php [L]
+RewriteRule ^Bienvenue$ index.php [L]
+RewriteRule ^Ajout-patient$ /controllers/add-patientCtrl.php [L]
+RewriteRule ^Ajout-rdv$ /controllers/ajout-rdvCtrl.php [L]
+
 
 
 

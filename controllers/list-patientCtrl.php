@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__) . '/../models/Patient.php');
 
 $search= '';
-$limite = 5;
+$limite = 10;
 $debut = 0;
 
 // barre de recherche

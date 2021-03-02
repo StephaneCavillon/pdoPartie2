@@ -19,7 +19,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.php">Hopitale2n</a>
+            <a class="navbar-brand" href="/Bienvenue">Hopitale2n</a>
             <!-- bouton hamburger -->
             <button
             class="navbar-toggler"
@@ -42,7 +42,7 @@
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/controllers/add-patientCtrl.php">ajouter un patient</a></li>
+                            <li><a class="dropdown-item" href="/Ajout-patient">ajouter un patient</a></li>
                             <li><a class="dropdown-item" href="/controllers/list-patientCtrl.php?page=1">liste des patients</a></li>
                         </ul>
                     </li>
@@ -53,8 +53,8 @@
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/controllers/ajout-rdvCtrl.php">Ajout d'un rendez-vous</a></li>
-                            <li><a class="dropdown-item" href="/controllers/liste-rendezvousCtrl.php">Liste des rendez-vous</a></li>
+                            <li><a class="dropdown-item" href="/Ajout-rdv">Ajout d'un rendez-vous</a></li>
+                            <li><a class="dropdown-item" href="/controllers/liste-rendezvousCtrl.php?page=1">Liste des rendez-vous</a></li>
                         </ul>
                     </li>
                 <!-- ajout patient et rendez-vous-->

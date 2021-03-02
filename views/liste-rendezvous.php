@@ -1,5 +1,16 @@
 <h2 class="my-5">Liste des rendez-vous</h2>
 
+<!-- Search bar -->
+  <form action="" method="GET" >
+        <div class="input-group rounded">
+            <input type="search" name="search" id="search" class="form-control rounded" placeholder="Rechercher" aria-label="Search" aria-describedby="search-addon" value="<?= $search ?? ''?>"/>
+            <button type="submit" class="input-group-text border-0" id="search-addon">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+
+    <!-- tableau rdv -->
 <table class="table table-striped">
     <thead>
         <tr>
@@ -22,6 +33,26 @@
         <?php endforeach?> 
     </tbody>
 </table>
+
+
+<!--Pagination-->
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <!-- on affiche precedent que si le nombre de page est sup à 1 -->
+    <?php if($page>1): ?>
+        <li class="page-item"><a class="page-link" href="?page=<?=$page-1?>&search=<?=$search?>">Precedente</a></li>
+    <?php endif?>
+    <!-- faire un forEach par rapport au nombre de pages-->
+    <?php for ($i=1; $i<=$nombrePages; $i++):?>
+        <li class="page-item"><a class="page-link" href="?page=<?=$i?>&search=<?=$search?>"><?=$i?></a></li>
+    <?php endfor?>
+    <!-- on affiche suivant que si le nombre de page est inférieur au nombre de page max -->
+    <?php if($page < $nombrePages):?>
+        <li class="page-item"><a class="page-link" href="?page=<?=$page+1?>&search=<?=$search?>">Suivante</a></li>
+    <?php endif?>
+  </ul>
+</nav>
+
 
 <!-- Modal -->
 <div

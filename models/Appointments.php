@@ -33,15 +33,22 @@
             }
         }
 
-        public function listAppt(){
+        public function listAppt($debut=null, $limite=null, $search=NULL){
 
             try{
                 $sql = 'SELECT `patients`.`lastname`,`patients`.`firstname`, `patients`.`id` as idPatient, `appointments`.`id` as idAppt, `appointments`.`dateHour`
-                        FROM  `appointments`
-                        INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
-                        ORDER BY `dateHour`;';
+                FROM  `appointments`
+                INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
+                WHERE `lastname` LIKE  :search OR `firstname` LIKE :search
+                ORDER BY `dateHour` LIMIT :limite OFFSET :debut;';
+                   
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
+                $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+                $stmt->bindValue(':debut', $debut, PDO::PARAM_INT);
 
-                $stmt = $this->_pdo->query($sql);
+                $stmt->execute();
+
                 $listAppt = $stmt->fetchAll();
                 return $listAppt;
 
@@ -51,6 +58,25 @@
                 return false;
             }
         }
+
+        public function nbAppt($search=NULL){
+            try{
+                $sql = 'SELECT count(`Appointments`.`id`) FROM `Appointments`
+                    INNER JOIN `Patients` ON `appointments`.`idPatients` = `patients`.`id`
+                    WHERE `lastname` LIKE :search OR `firstname` LIKE :search;';
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
+                $stmt->execute();
+
+                $nombreTotalAppt = $stmt->fetchColumn();
+
+                return $nombreTotalAppt;
+            }catch(PDOException $e){
+                echo 'erreur de requête : ' . $e->getMessage();
+            }
+
+        }
+
 
         public function descriptionAppt($idAppt){
             //récupération du profil sélectionné en GET dans les paramètres de la méthode

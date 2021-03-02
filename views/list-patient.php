@@ -18,15 +18,18 @@
 
 <h2 class="my-5">Liste des patients</h2>
 
+<!-- Search bar -->
+<form action="" method="GET" >
+    <div class="input-group rounded">
+        <input type="search" name="search" id="search" class="form-control rounded" placeholder="Rechercher" aria-label="Search" aria-describedby="search-addon" value="<?= $search ?? ''?>"/>
+        <button type="submit" class="input-group-text border-0" id="search-addon">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</form>
+
+<!-- Tableau patients -->
 <table class="table table-striped">
-    <form action="" method="GET" >
-        <div class="input-group rounded">
-            <input type="search" name="search" id="search" class="form-control rounded" placeholder="Rechercher" aria-label="Search" aria-describedby="search-addon" value="<?= $search ?? ''?>"/>
-            <button type="submit" class="input-group-text border-0" id="search-addon">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-    </form>
     <thead>
         <tr>
             <th scope="col">Nom</th>
