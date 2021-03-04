@@ -35,6 +35,11 @@ if(!empty($_GET['page'])){
 
 $listPatients = $patient->listPatient($debut,$limite,$search);
 
+if(isset($_GET['ajax']) == 1) {
+    echo json_encode($listPatients);
+    exit;
+}
+
 
 include(dirname(__FILE__) . '/..\views\templates\header.php');
 

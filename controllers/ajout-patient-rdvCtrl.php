@@ -118,16 +118,17 @@ require_once(dirname(__FILE__) . '/../models/Appointments.php');
 
             $pdo->beginTransaction();
 
+            // hydratation de l'objet patient
             $patient = new Patient($lastname,$firstname,$birthDate,$phone,$mail);
-
+            // ajout du patient à la base de donnée
             $testRegisterPatient = $patient->addPatient();
-
+            // recupération du dernier Id inseré
             $idPatient = $pdo->lastInsertId();
-
+            // hydratation de l'objet appointments
             $appt = new Appointments($dateHour, $idPatient);
-
+            // ajout du rdv a la bdd
             $testRegisterAppt = $appt->addAppt();
-            
+            // vérification que tout c'est bien passé 
             if($testRegisterPatient && $testRegisterAppt){
                 $pdo->commit();
 
