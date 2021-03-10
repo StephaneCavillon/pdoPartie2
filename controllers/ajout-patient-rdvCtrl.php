@@ -2,7 +2,7 @@
 
 require_once(dirname(__FILE__) . '/../models/Patient.php');
 require_once(dirname(__FILE__) . '/../models/Appointments.php');
-
+require_once(dirname(__FILE__) . '/../utils/database.php');
 
 // controle des données du patient
 /******************************************************************************************************** */
